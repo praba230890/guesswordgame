@@ -3,52 +3,53 @@ import random
 class GuessWord(object):
     
     def __init__(self):
-        word = ""
-        wordlist = ["jack", "back", "cock", "luck", "bang", "tool", "dogs", "bags", "life", "kick"]
-        key = True
-        lastword = []
+        self.word = ""
+        self.wordlist = ["jack", "back", "cock", "luck", "bang", "tool", "dogs", "bags", "life", "kick"]
+        self.key = True
+        self.lastword = []
+	# todo: should move some attributes from __init__ to start_game method (word, key & lastword)
 
     def start_game(self):
-        while key == True:
+        while self.key == True:
             star = 0
             exc = 0
             tmpwordlength = 0
             same = []
             #checking and grabbing the game word
-            if word == "":
+            if self.word == "":
                 while True:
-                    wordno = random.randint(0,len(wordlist)-1)
-                    word = wordlist[wordno]
-                    if word in lastword:
+                    wordno = random.randint(0,len(self.wordlist)-1)
+                    self.word = self.wordlist[wordno]
+                    if self.word in self.lastword:
                         pass
                     else:
                         break
             #grabbing the guess word and checking the word length
-            while tmpwordlength != len(word):
-                tmpword = raw_input("Enter your guess that must be containing "+ str(len(word)) +" letters: ")
+            while tmpwordlength != len(self.word):
+                tmpword = raw_input("Enter your guess that must be containing "+ str(len(self.word)) +" letters: ")
                 tmpwordlength = len(tmpword)
             #Exact word match if block
-            if word == tmpword:
+            if self.word == tmpword:
                 newkey = int(raw_input("Congrads you've got the right word. To continue playing the game please enter 1 and to quit enter 2: \n 1. play \n 2. quit \n"))
                 if newkey == 1:
-                    lastword.append(word)
-                    word = ""
+                    self.lastword.append(self.word)
+                    self.word = ""
                 else:
                     star = 0
                     exc = 0
-                    key = False
+                    self.key = False
                     break
             #star calculation
-            for i in range(len(word)):
-                if tmpword[i] == word[i]:
+            for i in range(len(self.word)):
+                if tmpword[i] == self.word[i]:
                     same.append(tmpword[i])
                     star += 1
             #Exclamation calculation
-            for i in range(len(word)):
+            for i in range(len(self.word)):
                 for j in range(len(tmpword)):
-                    if i != j and tmpword[i] == word[j] and tmpword[i] not in same:
+                    if i != j and tmpword[i] == self.word[j] and tmpword[i] not in same:
                                 exc +=1
             #Guess output
-            print ' '.join(['_' for i in range(len(word))]) + '\t' + ' '.join(['*' for i in range(star)]) + ' '.join([' !' for i in range(exc)])
+            print ' '.join(['_' for i in range(len(self.word))]) + '\t' + ' '.join(['*' for i in range(star)]) + ' '.join([' !' for i in range(exc)])
       
 
