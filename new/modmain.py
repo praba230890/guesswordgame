@@ -3,13 +3,13 @@ import random
 class GuessWord(object):
     
     def __init__(self):
-        self.word = ""
         self.wordlist = ["jack", "back", "cock", "luck", "bang", "tool", "dogs", "bags", "life", "kick"]
-        self.key = True
-        self.lastword = []
 	# todo: should move some attributes from __init__ to start_game method (word, key & lastword)
 
     def start_game(self):
+        self.word = ""
+        self.key = True
+        self.lastword = []
         while self.key == True:
             star = 0
             exc = 0
