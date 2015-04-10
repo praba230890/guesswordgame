@@ -30,7 +30,7 @@ class GuessWord(object):
                 tmp_word_length = len(tmp_word)
             #Exact word match if block
             if self.word == tmp_word:
-                new_key = int(raw_input("Congrads you've got the right word. To continue playing the game please enter 1 and to quit enter 2: \n 1. play \n 2. quit \n"))
+                new_key = int(raw_input("Congrats! you've got the right word. To continue playing the game please enter 1 and to quit enter 2: \n 1. play \n 2. quit \n"))
                 if new_key == 1:
                     self.last_word.append(self.word)
                     self.word = ""

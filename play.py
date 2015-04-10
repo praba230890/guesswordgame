@@ -72,7 +72,7 @@ def main():
         print """
         Enter your guess that must be containing 4 letters: bulb
         
-        Congrads you've got the right word. To continue playing the game please enter 1 and to quit enter 2: 
+        Congrats! you've got the right word. To continue playing the game please enter 1 and to quit enter 2: 
         1. play 
         2. quit 
         
