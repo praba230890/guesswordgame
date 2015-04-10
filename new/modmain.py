@@ -11,44 +11,54 @@ class GuessWord(object):
         self.key = True
         self.last_word = []
         while self.key == True:
-            star = 0
-            exc = 0
-            tmp_word_length = 0
-            same = []
+            self.star = 0
+            self.exc = 0
+            self.tmp_word_length = 0
+            self.same = []
+
             #checking and grabbing the game word
             if self.word == "":
-                while True:
-                    word_no = random.randint(0,len(self.word_list)-1)
-                    self.word = self.word_list[word_no]
-                    if self.word in self.last_word:
-                        pass
-                    else:
-                        break
+                self.word = self.grab_word()
+
             #grabbing the guess word and checking the word length
-            while tmp_word_length != len(self.word):
-                tmp_word = raw_input("Enter your guess that must be containing "+ str(len(self.word)) +" letters: ")
-                tmp_word_length = len(tmp_word)
+            while self.tmp_word_length != len(self.word):
+                self.tmp_word = raw_input("Enter your guess that must be containing "+ str(len(self.word)) +" letters: ")
+                self.tmp_word_length = len(self.tmp_word)
+
             #Exact word match if block
-            if self.word == tmp_word:
-                new_key = int(raw_input("Congrats! you've got the right word. To continue playing the game please enter 1 and to quit enter 2: \n 1. play \n 2. quit \n"))
-                if new_key == 1:
+            if self.word == self.tmp_word:
+                self.new_key = int(raw_input("Congrats! you've got the right word. To continue playing the game please enter 1 and to quit enter 2: \n 1. play \n 2. quit \n"))
+                if self.new_key == 1:
                     self.last_word.append(self.word)
                     self.word = ""
                 else:
-                    star = 0
-                    exc = 0
+                    self.star = 0
+                    self.exc = 0
                     self.key = False
                     break
+
             #star calculation
-            for i in range(len(self.word)):
-                if tmp_word[i] == self.word[i]:
-                    same.append(tmp_word[i])
-                    star += 1
+            self.calculate_star()
+
             #Exclamation calculation
             for i in range(len(self.word)):
-                for j in range(len(tmp_word)):
-                    if i != j and tmp_word[i] == self.word[j] and tmp_word[i] not in same:
-                                exc +=1
+                for j in range(len(self.tmp_word)):
+                    if i != j and self.tmp_word[i] == self.word[j] and self.tmp_word[i] not in self.same:
+                                self.exc +=1
             #Guess output
-            print ' '.join(['_' for i in range(len(self.word))]) + '\t' + ' '.join(['*' for i in range(star)]) + ' '.join([' !' for i in range(exc)])
+            print ' '.join(['_' for i in range(len(self.word))]) + '\t' + ' '.join(['*' for i in range(self.star)]) + ' '.join([' !' for i in range(self.exc)])
+    def grab_word(self):
+        while True:
+            word_no = random.randint(0,len(self.word_list)-1)
+            word = self.word_list[word_no]
+            if word in self.last_word:
+                pass
+            else:
+                break
+        return word
 
+    def calculate_star(self):
+        for i in range(len(self.word)):
+            if self.tmp_word[i] == self.word[i]:
+                self.same.append(self.tmp_word[i])
+                self.star += 1
