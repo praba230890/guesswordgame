@@ -1,0 +1,7 @@
+Play the game by running the play.py script:
+
+$ python play.py
+
+You could see a sample play by running:
+
+$ python play.py tut
