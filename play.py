@@ -1,4 +1,4 @@
-from new import modmain
+import game.main as game
 import time
 import sys
 
@@ -99,7 +99,7 @@ def main():
 
             """
 
-        guess_word = modmain.GuessWord()
+        guess_word = game.GuessWord()
         guess_word.start_game()
 
     else:
