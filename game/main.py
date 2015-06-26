@@ -15,6 +15,7 @@ class GuessWord(object):
             self.exc = 0
             self.tmp_word_length = 0
             self.same = []
+            self.diff = []
 
             #checking and grabbing the game word
             if self.word == "":
@@ -43,7 +44,8 @@ class GuessWord(object):
             #Exclamation calculation
             for i in range(len(self.word)):
                 for j in range(len(self.tmp_word)):
-                    if i != j and self.tmp_word[i] == self.word[j] and self.tmp_word[i] not in self.same:
+                    if i != j and self.tmp_word[i] == self.word[j] and self.tmp_word[i] not in self.same and self.tmp_word[i] not in self.diff:
+                                self.same.append(self.tmp_word[i])
                                 self.exc +=1
             #Guess output
             print ' '.join(['_' for i in range(len(self.word))]) + '\t' + ' '.join(['*' for i in range(self.star)]) + ' '.join([' !' for i in range(self.exc)])
