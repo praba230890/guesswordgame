@@ -98,9 +98,20 @@ def main():
             position with the number of exclamation symbol.
 
             """
+        game_mode = ""
+        while game_mode not in ["1", "2"]:
+            game_mode = raw_input("For single player mode enter 1 \nFor multiplayer(2) mode enter 2 \n")
 
-        guess_word = game.GuessWord()
-        guess_word.start_game()
+        if game_mode == "1":
+            player_one = raw_input("Enter the player one name: ")
+            player_two = "Computer"
+            guess_word = game.GuessWord(player_one, player_two)
+            guess_word.start_game()
+        else:
+            player_one = raw_input("Enter the player one name: ")
+            player_two = raw_input("Enter the player two name: ")
+            guess_word = game.GuessWord(player_one, player_two)
+            guess_word.start_game()
 
     else:
         print "Good bye!"

@@ -1,13 +1,30 @@
 import random
+from getpass import getpass as get_keyword
 
 class GuessWord(object):
     
-    def __init__(self):
+    def __init__(self, player_one, player_two):
         self.word_list = ["jack", "back", "cock", "luck", "bang", "tool", "dogs", "bags", "life", "kick"]
-        # todo: should move some attributes from __init__ to start_game method (word, key & lastword)
+        self.player_one = Player(player_one)
+        self.player_two = Player(player_two)
+        self.players = [self.player_one, self.player_two]
+        self.player_names = [player.name for player in self.players]
+        self.computer = "Computer"
+        if self.computer in self.player_names:
+            self.mode = 1
+        else:
+            self.mode = 2
+        self.player_cursor = 0
 
     def start_game(self):
-        self.word = ""
+        if self.mode == 1:
+            self.current_player = self.player_one
+            self.other_player = self.player_two
+            self.word = ""
+        else:
+            self.current_player = self.players[self.player_cursor%len(self.players)]
+            self.other_player = self.players[(self.player_cursor+1)%len(self.players)]
+            self.word = get_keyword("Player %s, please enter the word for player %s to guess: " % (self.other_player.name, self.current_player.name) )
         self.key = True
         self.last_word = []
         while self.key == True:
@@ -15,7 +32,9 @@ class GuessWord(object):
             self.exc = 0
             self.tmp_word_length = 0
             self.same = []
+            self.same_index = []
             self.diff = []
+            self.diff_index = []
 
             #checking and grabbing the game word
             if self.word == "":
@@ -28,10 +47,25 @@ class GuessWord(object):
 
             #Exact word match if block
             if self.word == self.tmp_word:
+                self.player_one.games_played += 1
+                self.player_two.games_played += 1
+                self.current_player.wins += 1
+                if self.mode == 2:
+                    self.player_cursor += 1
+                    self.current_player = self.players[(self.player_cursor)%len(self.players)]
+                    self.other_player = self.players[(self.player_cursor+1)%len(self.players)]
+                for player in self.players:
+                    print "For player: ", player.name
+                    print "Games Played: ", player.games_played
+                    print "Games Won: ", player.wins
                 self.new_key = int(raw_input("Congrats! you've got the right word. To continue playing the game please enter 1 and to quit enter 2: \n 1. play \n 2. quit \n"))
                 if self.new_key == 1:
                     self.last_word.append(self.word)
-                    self.word = ""
+                    if self.mode == 2:
+                        self.word = get_keyword("Player %s, please enter the word for player %s to guess: " % (self.other_player.name, self.current_player.name) )
+                    else:
+                        self.word = ""
+                    continue
                 else:
                     self.star = 0
                     self.exc = 0
@@ -42,10 +76,11 @@ class GuessWord(object):
             self.calculate_star()
 
             #Exclamation calculation
-            for i in range(len(self.word)):
-                for j in range(len(self.tmp_word)):
-                    if i != j and self.tmp_word[i] == self.word[j] and self.tmp_word[i] not in self.same and self.tmp_word[i] not in self.diff:
-                                self.same.append(self.tmp_word[i])
+            for i, word_char in enumerate(self.word):
+                for j, tmp_word_char in enumerate(self.tmp_word):
+                    if i != j and tmp_word_char == word_char and j not in self.same_index and j not in self.diff_index:
+                                self.diff.append(tmp_word_char)
+                                self.diff_index.append(j)
                                 self.exc +=1
             #Guess output
             print ' '.join(['_' for i in range(len(self.word))]) + '\t' + ' '.join(['*' for i in range(self.star)]) + ' '.join([' !' for i in range(self.exc)])
@@ -60,7 +95,15 @@ class GuessWord(object):
         return word
 
     def calculate_star(self):
-        for i in range(len(self.word)):
-            if self.tmp_word[i] == self.word[i]:
-                self.same.append(self.tmp_word[i])
+        for i, char in enumerate(self.word):
+            if self.tmp_word[i] == char:
+                self.same.append(char)
+                self.same_index.append(i)
                 self.star += 1
+
+class Player(object):
+    def __init__(self, name=None):
+        self.name = name
+        self.games_played = 0
+        self.wins = 0
+        self.lost = 0
