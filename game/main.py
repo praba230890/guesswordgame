@@ -1,4 +1,5 @@
 import random
+import collections
 from getpass import getpass as get_keyword
 
 class GuessWord(object):
@@ -31,8 +32,6 @@ class GuessWord(object):
             self.star = 0
             self.exc = 0
             self.tmp_word_length = 0
-            self.same = []
-            self.same_index = []
             self.diff = []
             self.diff_index = []
 
@@ -76,14 +75,11 @@ class GuessWord(object):
             self.calculate_star()
 
             #Exclamation calculation
-            for i, word_char in enumerate(self.word):
-                for j, tmp_word_char in enumerate(self.tmp_word):
-                    if i != j and tmp_word_char == word_char and j not in self.same_index and j not in self.diff_index:
-                                self.diff.append(tmp_word_char)
-                                self.diff_index.append(j)
-                                self.exc +=1
+            self.calculate_exclamation()
+
             #Guess output
             print ' '.join(['_' for i in range(len(self.word))]) + '\t' + ' '.join(['*' for i in range(self.star)]) + ' '.join([' !' for i in range(self.exc)])
+
     def grab_word(self):
         while True:
             word_no = random.randint(0,len(self.word_list)-1)
@@ -95,11 +91,21 @@ class GuessWord(object):
         return word
 
     def calculate_star(self):
+        self.new_word = ""
+        self.new_tmp_word = ""
         for i, char in enumerate(self.word):
             if self.tmp_word[i] == char:
-                self.same.append(char)
-                self.same_index.append(i)
                 self.star += 1
+                continue
+            self.new_word += char
+            self.new_tmp_word += self.tmp_word[i]
+
+    def calculate_exclamation(self):
+        new_word_count = dict(collections.Counter(self.new_word))
+        new_tmp_word_count = dict(collections.Counter(self.new_tmp_word))
+        for char in new_word_count:
+            if new_tmp_word_count.has_key(char):
+                self.exc += min(new_tmp_word_count[char], new_word_count[char])
 
 class Player(object):
     def __init__(self, name=None):
