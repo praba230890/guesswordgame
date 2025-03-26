@@ -19,15 +19,15 @@ class GuessWord(object):
             #grabbing the guess word from user and checking the word length
             while self.guess_word_length != len(self.word):
                 if self.guess_word_length != 0:
-                    print "Please enter a %d letter word" % len(self.word)
-                self.guess_word = raw_input(
+                    print ("Please enter a %d letter word" % len(self.word))
+                self.guess_word = input(
                     "Enter your guess that must be containing "+ str(len(self.word)) +" letters: "
                     )
                 self.guess_word_length = len(self.guess_word)
 
             #Exact word match if block
             if self.word == self.guess_word:
-                self.new_key = int(raw_input("Congrats! you've got the right word. To continue playing the game please enter 1 and to quit enter 2: \n 1. play \n 2. quit \n"))
+                self.new_key = int(input("Congrats! you've got the right word. To continue playing the game please enter 1 and to quit enter 2: \n 1. play \n 2. quit \n"))
                 if self.new_key == 1:
                     self.last_word.append(self.word)
                     self.word = self.grab_word()
@@ -45,7 +45,7 @@ class GuessWord(object):
             self.calculate_exclamation()
 
             #Guess output
-            print ' '.join(['_' for i in range(len(self.word))]) + '\t' + ' '.join(['*' for i in range(self.star)]) + ' '.join([' !' for i in range(self.exc)])
+            print( ' '.join(['_' for i in range(len(self.word))]) + '\t' + ' '.join(['*' for i in range(self.star)]) + ' '.join([' !' for i in range(self.exc)]))
 
     def grab_word(self):
         while True:
@@ -68,7 +68,7 @@ class GuessWord(object):
         new_word_count = dict(collections.Counter(self.new_word))
         new_guess_word_count = dict(collections.Counter(self.new_guess_word))
         for char in new_word_count:
-            if new_guess_word_count.has_key(char):
+            if char in new_guess_word_count:
                 self.exc += min(new_guess_word_count[char], new_word_count[char])
 
 

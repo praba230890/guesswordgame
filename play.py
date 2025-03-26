@@ -6,22 +6,22 @@ def main():
     play = "--++playtheguesswordgame++--"
     if len(sys.argv) > 1 and sys.argv[1] == "tut":
 
-        print """
+        print ("""
         Enter your guess that must be containing 4 letters: 
-            """
+            """)
         time.sleep(3)
-        print """
+        print ("""
         # now the player types the word 'buff'
         
-        """
+        """)
         time.sleep(5)
-        print """
+        print ("""
         Enter your guess that must be containing 4 letters: buff
 
         _ _ _ _ **
-        """
+        """)
         time.sleep(6)
-        print """
+        print ("""
         # the above is the clues for the player from his word buff
         # that is, the computer is saying that there are two characters
         # in the word 'buff' that exactly exists (and buff wasn't that 
@@ -31,45 +31,45 @@ def main():
         # that computer have in its mind.
 
         loading .......
-        """
+        """)
 
         time.sleep(20)
-        print """
+        print ("""
         # Now again the user tries the word 'lube'
 
         Enter your guess that must be containing 4 letters: lube
 
         _ _ _ _ *!!
 
-        """
+        """)
 
         time.sleep(6)
-        print """
+        print ("""
         # from the above clue the player gets to know that the character 'u'
         # lies exactly at the second position on the word that he has to guess
         # and 'b' should be at the first position, from the previous clue (no 'f' here).
         # The player has now only a one ! to figure out. i,e either 'l' or 'b' exists in the 
         # word but misplaced. now he is going to figure it out by trying the word 'bulk'.
 
-        """
+        """)
 
         time.sleep(10)
 
-        print """
+        print ("""
         Enter your guess that must be containing 4 letters: bulk
 
         _ _ _ _ ***
 
 
-        """
+        """)
 
-        print """
+        print ("""
         # Here, the player knows, one '*' for 'b', one '*' for 'u' and the last star for 'l' (from 
         # previous clue). Now, he knows first three chars and he thinks the word might be 'bulb'
 
-        """
+        """)
 
-        print """
+        print ("""
         Enter your guess that must be containing 4 letters: bulb
         
         Congrats! you've got the right word. To continue playing the game please enter 1 and to quit enter 2: 
@@ -77,15 +77,15 @@ def main():
         2. quit 
         
         # so, that's it we guess!
-        """
+        """)
 
         play = raw_input("Do you want to play the game now! (y/n) :")
         while play != 'y' and play != 'Y' and play != 'n' and play != 'N':
-            print "please type either 'y' or 'n' without single quote"
+            print ("please type either 'y' or 'n' without single quote")
             play = raw_input("Do you want to play the game now! (y/n) :")
 
     if play == "--++playtheguesswordgame++--" or play == 'y' or play == 'Y':
-        print """
+        print ("""
                                         Welcome to Guess Word game
             Game: Computer will think a word and you should guess it. It would be easy to win 
             the game if you apply the basic logic.
@@ -97,18 +97,18 @@ def main():
             of stars and the number of characters that exist in the word but not in the appropriate 
             position with the number of exclamation symbol.
 
-            """
+            """)
 
         guess_word = game.GuessWord()
         guess_word.start_game()
 
     else:
-        print "Good bye!"
+        print ("Good bye!")
 
 if __name__ == "__main__":
     try:
         main()
     except (KeyboardInterrupt, SystemExit):
-        print "\n Recieved Interrupt Signal. Bye...."
+        print ("\n Recieved Interrupt Signal. Bye....")
         import sys
         sys.exit()
